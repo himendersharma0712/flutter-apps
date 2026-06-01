@@ -5,3 +5,13 @@ Material Design is a flexible design system by Google.
 return MaterialApp(
 
 )
+
+Dart code is parsed -> compiled by Dart & Flutter tools to native ios or android (or other platforms) 
+machine code.
+
+lib folder contains the main.dart file.
+pubspec.yaml specifies the dependencies being used in the project.
+
+We use widgets to build our UI in Flutter. We combine and nest our widgets.
+
+A Widget tree structure is formed. 
