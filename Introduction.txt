@@ -1,0 +1,7 @@
+Flutter apps use Material Design. 
+
+Material Design is a flexible design system by Google. 
+
+return MaterialApp(
+
+)
