@@ -12,5 +12,6 @@ It also features a colorful gradient background for the homescreen.
         - stylized_text.dart
 
 ## Acknowledgments
-Developed by Himender Sharma 
+**Developed by Himender Sharma** 
+
 *Adapted From Maximilian Schwarzmuller's Flutter Course on Udemy*
