@@ -1,5 +1,6 @@
 
-import 'package:first_flutter_app/stylized_text.dart';
+
+import 'package:first_flutter_app/roll_dice.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,7 +25,7 @@ class GradientContainer extends StatelessWidget {
               end: endAlignment,
           )),
           child: Center(
-            child: StylizedText('🕊️ Hello Flutter'),
+            child: RollDice()
             ),
         );
   }
