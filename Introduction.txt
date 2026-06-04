@@ -15,3 +15,16 @@ pubspec.yaml specifies the dependencies being used in the project.
 We use widgets to build our UI in Flutter. We combine and nest our widgets.
 
 A Widget tree structure is formed. 
+
+
+Dart is a type safe language.
+
+Break up the large widget trees into simpler reusable custom widgets to simplify the code.
+
+Flutter calls the build() method when it detects your widget in the widget tree. 
+
+Stateless widgets don't manage any internal data. Only updates the screen if parent widgets were updated. 
+
+Stateful widgets are required when you need to track states and if the rendered UI changes on state changes. When state changes, the Widget is re-rendered and the UI is updated. 
+
+build() method should be triggered again to see the state change.
