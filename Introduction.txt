@@ -62,3 +62,9 @@ final myList = [
 
 
 // for column , the cross axis the horizontal axis.
+
+// row is used to display widgets horizontally.
+// for row, main axis is horizontal axis.
+
+
+SingleChildScrollView -> makes its child scrollable...
