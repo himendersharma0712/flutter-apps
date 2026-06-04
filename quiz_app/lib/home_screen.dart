@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
 
-  const HomeScreen({super.key});
+  HomeScreen(this.startQuiz, {super.key});
+
+  final void Function() startQuiz;
 
   @override
   Widget build(context){
@@ -33,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 icon: Icon(Icons.arrow_right_alt),
-                onPressed: () {}, 
+                onPressed: startQuiz, 
                 label: const Text('Start Quiz',)
                 )
             ]

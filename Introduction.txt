@@ -28,3 +28,26 @@ Stateless widgets don't manage any internal data. Only updates the screen if par
 Stateful widgets are required when you need to track states and if the rendered UI changes on state changes. When state changes, the Widget is re-rendered and the UI is updated. 
 
 build() method should be triggered again to see the state change.
+
+/-------------------------------------------------------------------------------------------/
+
+
+rendering content conditionally using setState() function and changing the widgets dynamically and letting flutter detect changes and update the UI.
+
+
+initState(): Executed by Flutter when the StatefulWidget's State object is initialized
+
+build(): Executed by Flutter when the Widget is built for the first time AND after setState() was called
+
+dispose(): Executed by Flutter right before the Widget will be deleted (e.g., because it was displayed conditionally)
+
+
+// using if and else in lists to conditionally add elements
+final myList = [
+  1,
+  2,
+  if (condition)
+    3
+  else
+    4
+];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/home_screen.dart';
+import 'package:quiz_app/question_screen.dart';
 
 
 class Quiz extends StatefulWidget {
@@ -14,6 +15,33 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+
+  // Widget? currentScreen;
+
+  // this method only runs once to initialize variables 
+  // called after object creation
+  // @override 
+  // void initState(){
+  //   currentScreen = HomeScreen(changeScreen);
+  //   super.initState();
+  // }
+
+  // void changeScreen(){
+  //   setState(() {
+  //     currentScreen = QuestionScreen();
+  //   });
+  // }
+
+  // #method 2 -> use strings
+  
+  var currentScreen = 'home-screen';
+
+  void changeScreen(){
+    setState(() {
+      currentScreen = 'question-screen';
+    });
+  }
+
 
   @override
   Widget build(context){
@@ -30,7 +58,7 @@ class _QuizState extends State<Quiz> {
               end: AlignmentGeometry.bottomEnd
               )
             ),
-          child: HomeScreen()
+          child: currentScreen == 'home-screen' ? HomeScreen(changeScreen) : const QuestionScreen(),
           ),
       ),
       debugShowCheckedModeBanner: false,
