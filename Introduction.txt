@@ -51,3 +51,14 @@ final myList = [
   else
     4
 ];
+
+
+// main axis for column is the vertical axis.
+
+// map returns a new list of new objects.
+
+
+// ... spread operator -> takes a list and extracts all the elements of the list 
+
+
+// for column , the cross axis the horizontal axis.

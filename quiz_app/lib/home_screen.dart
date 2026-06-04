@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
 
-  HomeScreen(this.startQuiz, {super.key});
+  const HomeScreen(this.startQuiz, {super.key});
 
   final void Function() startQuiz;
 

@@ -58,7 +58,7 @@ class _QuizState extends State<Quiz> {
               end: AlignmentGeometry.bottomEnd
               )
             ),
-          child: currentScreen == 'home-screen' ? HomeScreen(changeScreen) : const QuestionScreen(),
+          child: currentScreen == 'home-screen' ? HomeScreen(changeScreen) : const QuestionScreen()
           ),
       ),
       debugShowCheckedModeBanner: false,
