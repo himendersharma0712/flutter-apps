@@ -5,6 +5,7 @@ import 'package:quiz_app/question_screen.dart';
 import 'package:quiz_app/result_screen.dart';
 
 
+
 class Quiz extends StatefulWidget {
 
   const Quiz({super.key});
@@ -29,6 +30,16 @@ class _QuizState extends State<Quiz> {
       });
     }
   }
+
+  void restartQuiz(){
+    setState(() {
+      selectedAnswers = [];
+      currentScreen = 'home-screen';
+    });
+  }
+  
+
+
 
   // Widget? currentScreen;
 
@@ -75,7 +86,7 @@ class _QuizState extends State<Quiz> {
           child: switch(currentScreen) {
               'home-screen' => HomeScreen(changeScreen),
               'question-screen' => QuestionScreen(onSelectAnswer: chosenAnswer),
-              'result-screen' => ResultScreen(chosenAnswers: selectedAnswers,),
+              'result-screen' => ResultScreen(chosenAnswers: selectedAnswers, onRestart: restartQuiz),
               _ => HomeScreen(changeScreen)
           } 
           ),

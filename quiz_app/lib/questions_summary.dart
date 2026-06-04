@@ -17,15 +17,40 @@ class QuestionsSummary extends StatelessWidget {
         child: Column(   
           children: summaryData.map(
             (data) {
-               return Row(children: [
-                  Text(data['question_index'].toString()),
+               return Row(
+                children: [
+                  Column( children: [
+                  Container(
+                    alignment: AlignmentGeometry.center,
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      shape: BoxShape.circle
+                      ),
+                    child: Text(
+                      data['question_index'].toString(),
+                      textAlign: TextAlign.center,)
+                    ),
+                    SizedBox(height: 35,)]),
+                    SizedBox(width: 10,),
                   Expanded( // doesnt grow more than the row's width
                     child: Column(
                     children: [
-                      Text(data['question'].toString()),
+                      Text(data['question'].toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(height: 5),
-                      Text(data['correct_answer'].toString()),
-                      Text(data['user_answer'].toString()),
+                      Text(data['correct_answer'].toString()
+                      , style: TextStyle(
+                        color: Colors.lightGreen
+                      ),),
+                      Text(data['user_answer'].toString()
+                      , style: TextStyle(
+                        color: Colors.amberAccent
+                      ),),
                     ],
                     ),
                   )
