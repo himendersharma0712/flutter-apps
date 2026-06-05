@@ -36,6 +36,7 @@ class QuestionsSummary extends StatelessWidget {
                     SizedBox(width: 10,),
                   Expanded( // doesnt grow more than the row's width
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(data['question'].toString(),
                       style: TextStyle(
@@ -51,6 +52,7 @@ class QuestionsSummary extends StatelessWidget {
                       , style: TextStyle(
                         color: Colors.amberAccent
                       ),),
+                      const SizedBox(height: 10),
                     ],
                     ),
                   )
