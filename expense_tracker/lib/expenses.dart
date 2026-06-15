@@ -20,9 +20,43 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses>{
 
 void _showAddExpenseOverlay(){
-  showModalBottomSheet(context: context , builder: (ctx) =>
-    NewExpense()
+  showModalBottomSheet(
+    isScrollControlled: true,
+    context: context , 
+    builder: (ctx) => NewExpense(onAddExpense: _addExpense)
    );
+}
+
+
+void _removeExpense(Expense expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text('Expense deleted'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+
+void _addExpense(Expense expense){
+  setState(() {
+    _registeredExpenses.add(expense);
+  });
 }
 
 
@@ -38,11 +72,6 @@ final List<Expense> _registeredExpenses = [
     title: 'Backrooms', 
     date: DateTime.now() ),
   Expense(
-    category: Category.food, 
-    amount: 5012, 
-    title: 'Subway Burgers', 
-    date: DateTime.now() ),
-  Expense(
     category: Category.work, 
     amount: 665.2, 
     title: 'flutter course', 
@@ -51,9 +80,20 @@ final List<Expense> _registeredExpenses = [
 
   @override
   Widget build(BuildContext context) {
+
+    Widget mainContent = Center(
+      child: Text(
+        'No expenses found. Start adding some!'
+      ),
+    );
+
+    if(_registeredExpenses.isNotEmpty){
+       mainContent = ExpensesList(expenses: _registeredExpenses, removeExpense: _removeExpense,);
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 210, 152, 220),
+        backgroundColor: const Color.fromARGB(255, 136, 196, 165),
         title: Text('Expense Tracker'),
         actions: [
           IconButton(onPressed: _showAddExpenseOverlay, icon: Icon(Icons.add))
@@ -62,7 +102,7 @@ final List<Expense> _registeredExpenses = [
       body: Column(
         children: [
           Text('The Chart'),
-          Expanded(child: ExpensesList(expenses: _registeredExpenses))
+          Expanded(child: mainContent )
         ],
       ),
     );

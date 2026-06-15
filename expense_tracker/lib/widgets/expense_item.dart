@@ -11,30 +11,33 @@ class ExpenseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 16),
-        child: Column(
-          children: [
-            Text(expense.title),
-            const SizedBox(height: 4,),
-            Row(
-              children: [
-                Text('\$${expense.amount.toStringAsFixed(2)}'),
-                const Spacer(), // fills all the space between amount and the next row
-                Row(
-                  children: [
-                    Icon(categoryIcons[expense.category]),
-                    const SizedBox(width: 8,),
-                    Text(expense.formattedDate)
-                  ],
-                ),
-              ],
-            )
-          ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5,1,5,1),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 16),
+          child: Column(
+            children: [
+              Text(expense.title),
+              const SizedBox(height: 4,),
+              Row(
+                children: [
+                  Text('\$${expense.amount.toStringAsFixed(2)}'),
+                  const Spacer(), // fills all the space between amount and the next row
+                  Row(
+                    children: [
+                      Icon(categoryIcons[expense.category]),
+                      const SizedBox(width: 8,),
+                      Text(expense.formattedDate)
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
-      ),
-      );
+        ),
+    );
   }
 
 }
