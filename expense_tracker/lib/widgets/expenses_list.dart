@@ -19,6 +19,10 @@ class ExpensesList extends StatelessWidget {
       itemCount: expenses.length,
        // key is needed to identify the widget which needs to be removed
       itemBuilder: (ctx,index) =>  Dismissible(
+        background: Container(
+          color: Theme.of(context).colorScheme.error,
+          margin: EdgeInsets.symmetric(horizontal: 16)
+        ),
         key: ValueKey(expenses[index]) ,
         onDismissed: (direction) {
           removeExpense(expenses[index]);
