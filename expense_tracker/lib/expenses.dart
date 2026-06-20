@@ -22,6 +22,7 @@ class _ExpensesState extends State<Expenses>{
 
 void _showAddExpenseOverlay(){
   showModalBottomSheet(
+    useSafeArea: true, // apply some padding to stay away from camera
     isScrollControlled: true,
     context: context , 
     builder: (ctx) => NewExpense(onAddExpense: _addExpense)
@@ -82,6 +83,10 @@ final List<Expense> _registeredExpenses = [
   @override
   Widget build(BuildContext context) {
 
+    // Gives the height and width of the device
+    final width = MediaQuery.of(context).size.width;
+    // MediaQuery.of(context).size.height;
+
     Widget mainContent = Center(
       child: Text(
         'No expenses found. Start adding some!'
@@ -100,9 +105,14 @@ final List<Expense> _registeredExpenses = [
           IconButton(onPressed: _showAddExpenseOverlay, icon: Icon(Icons.add))
         ],
         ),
-      body: Column(
+      body: width < 600 ? Column(
         children: [
           Chart(expenses: _registeredExpenses),
+          Expanded(child: mainContent )
+        ],
+      ) : Row(
+        children: [
+          Expanded(child: Chart(expenses: _registeredExpenses)),
           Expanded(child: mainContent )
         ],
       ),

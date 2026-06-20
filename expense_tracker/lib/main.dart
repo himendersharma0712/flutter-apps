@@ -2,6 +2,7 @@ import 'package:expense_tracker/expenses.dart';
 import 'package:flutter/material.dart';
 
 
+
 var kColorScheme = ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 147, 45, 230));
 
 var kDarkColorScheme = ColorScheme.fromSeed(
@@ -9,7 +10,12 @@ var kDarkColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(0, 18, 18, 227));
 
 void main(){
-  runApp(
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations( // locks device orientation for our app
+  //   [DeviceOrientation.portraitUp]
+  // ).then((fn) {
+      runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -53,6 +59,7 @@ void main(){
       debugShowCheckedModeBanner: false,
     )
   );  
+  // });
 }
 
 // we copy a pre-built theme with copyWith() and change only some attributes 
