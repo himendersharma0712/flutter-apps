@@ -633,3 +633,8 @@ One Huge Stateful Widget
 ```
 
 This minimizes unnecessary UI updates and rendering costs.
+
+
+# Stack Widget 
+
+it is used to stack widgets on top of each other, say text on an image background
