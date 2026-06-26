@@ -11,13 +11,18 @@ class MealDetailsScreen extends StatelessWidget {
   final Meal meal;
   final void Function(Meal meal) onToggleFavourite ;
   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
-          IconButton(onPressed: () { onToggleFavourite(meal); } , icon: Icon(Icons.favorite_outline))
+          IconButton(onPressed: () { onToggleFavourite(meal); } , 
+          icon: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: Icon(Icons.favorite_outline))
+          ), 
         ],
       ),
       body: 

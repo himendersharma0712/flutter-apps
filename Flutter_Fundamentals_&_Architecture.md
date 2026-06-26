@@ -638,3 +638,62 @@ This minimizes unnecessary UI updates and rendering costs.
 # Stack Widget 
 
 it is used to stack widgets on top of each other, say text on an image background
+
+# State Management 
+We had to pass the list of meals from one class through multiple classes to reach the class it was supposed to be used by. 
+
+We can fix this using Riverpod.
+
+# Riverpod
+It has a Provider which provides a dynamic value 
+and may also provide methods to change the value.
+
+## Consumer 
+A consumer will then change the value provided by the provider.
+Every widget can directly connect to a provider.
+
+# Explicit and Implicit Animations
+
+Explicit
+You control the entire animation. 
+
+uses AnimationController: 
+`_animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+      lowerBound: 0,
+      upperBound: 1,  
+      );
+      _animationController.forward();
+`
+
+and Animated Builder:
+` AnimatedBuilder(animation: _animationController, 
+        child:GridView(
+        padding: EdgeInsets.all(24), 
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, 
+        childAspectRatio: 3/2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20
+        ),
+        children: 
+        availableCategories.map((category) => CategoryGridItem(category: category,
+        onSelectCategory: () { _selectCategory(context, category); },)).toList()
+        ,),
+        builder: (context,child) => SlideTransition(
+        position: Tween(
+            begin: Offset(0,0.3),
+            end: Offset(0, 0)
+          ).animate(CurvedAnimation(
+            parent: _animationController, 
+            curve: Curves.fastOutSlowIn)),
+        child: child,
+        )
+`
+
+Implicit
+Flutter controls the animation.
+
+
+## with keyword
+`In Dart, the with keyword is used to apply mixins to a class, allowing the class to inherit functionality from multiple mixin classes without traditional multiple inheritance.  This enables code reuse by adding capabilities (methods and fields) from other classes into the current class`
