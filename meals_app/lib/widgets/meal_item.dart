@@ -40,12 +40,15 @@ class MealItem extends StatelessWidget {
         child: Stack(
           children: [
             // first widget here will be the bottom most widget
-            FadeInImage(
-            placeholder: MemoryImage(kTransparentImage), 
-            height: 200,
-            width: double.infinity,
-            image: NetworkImage(meal.imageUrl),
-            fit: BoxFit.cover, // get images from a url
+            Hero(
+              tag: meal.id,
+              child: FadeInImage(
+              placeholder: MemoryImage(kTransparentImage), 
+              height: 200,
+              width: double.infinity,
+              image: NetworkImage(meal.imageUrl),
+              fit: BoxFit.cover, // get images from a url
+              ),
             ),
             Positioned(
             bottom: 0,

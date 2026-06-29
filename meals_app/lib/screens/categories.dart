@@ -7,11 +7,12 @@ import 'package:meals_app/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatefulWidget {
 
-    const CategoriesScreen({super.key, 
-    required this.onToggleFavourite,
-    required this.availableMeals});
+    const CategoriesScreen(
+    {super.key,  
+    required this.availableMeals
+    });
 
-    final void Function(Meal meal) onToggleFavourite ;
+    
     final List<Meal> availableMeals;
 
   @override
@@ -52,7 +53,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> with SingleTickerPr
         builder: (ctx) => MealsScreen(
           meals: filteredMeals, 
           title: category.title,
-          onToggleFavourite: widget.onToggleFavourite,)));
+          )));
     }
 
     @override
@@ -67,7 +68,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> with SingleTickerPr
         mainAxisSpacing: 20
         ),
         children: 
-        availableCategories.map((category) => CategoryGridItem(category: category,
+        availableCategories.map((category) => 
+        CategoryGridItem(
+        category: category,
         onSelectCategory: () { _selectCategory(context, category); },)).toList()
         ,),
         builder: (context,child) => SlideTransition(

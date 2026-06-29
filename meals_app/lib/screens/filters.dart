@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals_app/providers/filters_provider.dart';
 
 
-enum Filters {
-  glutenFree,
-  lactoseFree,
-  vegetarian,
-  vegan,
-}
-
-
-class FiltersScreen extends StatefulWidget{
+class FiltersScreen extends ConsumerStatefulWidget {
   const FiltersScreen({
     super.key,
-    required this.currentFilters
     });
 
-  final Map<Filters,bool> currentFilters;
-
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<FiltersScreen> createState() {
     return _FiltersScreenState();
   }
 }
 
 
-class _FiltersScreenState extends State<FiltersScreen> {
+class _FiltersScreenState extends ConsumerState<FiltersScreen> {
 
   var _isGlutenFree = false;
   var _isLactoseFree = false;
@@ -34,10 +25,11 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   void initState() {
     super.initState();
-    _isGlutenFree = widget.currentFilters[Filters.glutenFree]!;
-    _isLactoseFree = widget.currentFilters[Filters.lactoseFree]!;
-    _isVegan = widget.currentFilters[Filters.vegan]!;
-    _isVegetarian = widget.currentFilters[Filters.vegetarian]!;
+    final currentFilters = ref.read(filtersProvider);
+    _isGlutenFree = currentFilters[Filters.glutenFree]!;
+    _isLactoseFree = currentFilters[Filters.lactoseFree]!;
+    _isVegan = currentFilters[Filters.vegan]!;
+    _isVegetarian = currentFilters[Filters.vegetarian]!;
   }
 
   @override

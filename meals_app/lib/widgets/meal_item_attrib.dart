@@ -11,8 +11,8 @@ class MealItemAttrib extends StatelessWidget {
   Widget build(BuildContext context) {
       return Row(
         children: [
-          Icon(icon, size: 17, color: Colors.white,),
-          SizedBox(width: 7,),
+          Icon(icon, size: 12, color: Colors.white,),
+          SizedBox(width: 4,),
           Text(
             label,
             style: TextStyle(
