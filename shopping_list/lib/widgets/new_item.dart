@@ -1,8 +1,13 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/categories.dart';
+import 'package:shopping_list/models/categories.dart';
+// import 'package:shopping_list/models/grocery_item.dart';
 
 class NewItem extends StatefulWidget {
 
@@ -14,6 +19,48 @@ class NewItem extends StatefulWidget {
 
 
 class _NewItemState extends State<NewItem> {
+
+ 
+  final _formKey = GlobalKey<FormState>();
+  // ignore: unused_field
+  var _enteredName = '';
+  var _enteredQuantity = 1;
+  var _selectedCategory = categories[Categories.vegetables]!;
+
+  void _saveItem() async{
+      if(_formKey.currentState!.validate()){
+           _formKey.currentState!.save();
+           final url = Uri.https(
+          'flutter-demo-2925f-default-rtdb.europe-west1.firebasedatabase.app',
+           'shopping_list.json'
+           );
+           final response = await http.post(
+            url,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+            'name' : _enteredName,
+            'quantity': _enteredQuantity, 
+            'category': _selectedCategory.title
+            })
+           );
+
+          if(!context.mounted){
+              return;
+          }
+          
+          Navigator.of(context).pop();
+          
+          //  Navigator.of(context).pop(GroceryItem(
+          //   id: DateTime.now().toString(), 
+          //   name: _enteredName,
+          //    quantity: _enteredQuantity, 
+          //   category: _selectedCategory
+          //   ));
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +70,7 @@ class _NewItemState extends State<NewItem> {
       body: Padding(
         padding: EdgeInsetsGeometry.all(12),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -31,7 +79,13 @@ class _NewItemState extends State<NewItem> {
                   label: Text('Name')
                 ),
                 validator: (value) {
-                  return 'ooga booga booga';
+                  if(value == null || value.isEmpty || value.trim().length <= 1 || value.trim().length > 50){
+                    return 'Must be between 1 and 50 characters';
+                  }
+                  return null;
+                },
+                onSaved: (newValue) {
+                  _enteredName = newValue!;
                 },
               ), // instead of TextField for the form,
               Row(
@@ -42,12 +96,24 @@ class _NewItemState extends State<NewItem> {
                       decoration: InputDecoration(
                         label: Text('Quantity'),
                       ),
-                      initialValue: '1',
+                      keyboardType: TextInputType.number ,
+                      initialValue: _enteredQuantity.toString(),
+                      validator: (value) {
+                        if(value == null || value.isEmpty ||
+                        int.tryParse(value) == null || int.tryParse(value)! <= 0){
+                          return 'Must be a valid, postive number';
+                        }
+                        return null;
+                      },
+                      onSaved: (value){
+                        _enteredQuantity = int.parse(value!);
+                      },
                     ),
                   ),
                   const SizedBox(width: 8,),
                   Expanded(
                     child: DropdownButtonFormField(
+                      initialValue: _selectedCategory,
                       items: [
                         for(final category in categories.entries)
                           DropdownMenuItem(
@@ -64,7 +130,11 @@ class _NewItemState extends State<NewItem> {
                             ],
                           ),)
                       ], 
-                      onChanged: (value) {}),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value!;
+                        });
+                      }),
                   )
                 ],
               ),
@@ -74,13 +144,15 @@ class _NewItemState extends State<NewItem> {
                 children: [
                   CupertinoButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {}, 
+                  onPressed: () {
+                    _formKey.currentState!.reset();
+                  }, 
                   child: Text('Reset')),
                   const SizedBox(width: 15,),
                   CupertinoButton.filled(
                   sizeStyle: CupertinoButtonSize.medium,
                   pressedOpacity: 0.7,
-                  onPressed: () {}, 
+                  onPressed: _saveItem, 
                   child: Text('Add Item'))
                 ],
               )
