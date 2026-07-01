@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/models/categories.dart';
+import 'package:shopping_list/models/grocery_item.dart';
 // import 'package:shopping_list/models/grocery_item.dart';
 
 class NewItem extends StatefulWidget {
@@ -20,7 +21,7 @@ class NewItem extends StatefulWidget {
 
 class _NewItemState extends State<NewItem> {
 
- 
+  var _isSending = false;
   final _formKey = GlobalKey<FormState>();
   // ignore: unused_field
   var _enteredName = '';
@@ -29,6 +30,11 @@ class _NewItemState extends State<NewItem> {
 
   void _saveItem() async{
       if(_formKey.currentState!.validate()){
+
+          setState(() {
+            _isSending = true;
+          });
+          
            _formKey.currentState!.save();
            final url = Uri.https(
           'flutter-demo-2925f-default-rtdb.europe-west1.firebasedatabase.app',
@@ -49,15 +55,17 @@ class _NewItemState extends State<NewItem> {
           if(!context.mounted){
               return;
           }
+
+          final resData = json.decode(response.body);
           
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(
+            GroceryItem(
+              id: resData['name'], 
+              name: _enteredName, 
+              quantity: _enteredQuantity, 
+              category: _selectedCategory
+              ));
           
-          //  Navigator.of(context).pop(GroceryItem(
-          //   id: DateTime.now().toString(), 
-          //   name: _enteredName,
-          //    quantity: _enteredQuantity, 
-          //   category: _selectedCategory
-          //   ));
       }
   }
 
@@ -144,7 +152,7 @@ class _NewItemState extends State<NewItem> {
                 children: [
                   CupertinoButton(
                   padding: EdgeInsets.zero,
-                  onPressed: () {
+                  onPressed: _isSending ? null : () {
                     _formKey.currentState!.reset();
                   }, 
                   child: Text('Reset')),
@@ -152,8 +160,13 @@ class _NewItemState extends State<NewItem> {
                   CupertinoButton.filled(
                   sizeStyle: CupertinoButtonSize.medium,
                   pressedOpacity: 0.7,
-                  onPressed: _saveItem, 
-                  child: Text('Add Item'))
+                  onPressed: _isSending ? null : _saveItem, 
+                  child: _isSending ? 
+                  SizedBox(
+                  height: 16,
+                  width: 16, 
+                  child: CupertinoActivityIndicator(color: CupertinoColors.white,),) 
+                  : Text('Add Item'))
                 ],
               )
             ],
