@@ -1,17 +1,25 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:travel_memories_app/models/place.dart';
 import 'package:travel_memories_app/widgets/image_input.dart';
+import 'package:travel_memories_app/widgets/location_input.dart';
 
-class AddPlace extends StatelessWidget {
+class AddPlace extends StatefulWidget {
 
   AddPlace({super.key});
 
   @override
+  State<AddPlace> createState() => _AddPlaceState();
+}
+
+class _AddPlaceState extends State<AddPlace> {
+  @override
   Widget build(BuildContext context) {
 
-    String placeName = '';
+    String _placeName = '';
+    File? _selectedImage;
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +35,7 @@ class AddPlace extends StatelessWidget {
               child: TextField(maxLines: 1,
               style: const TextStyle(color: Colors.white),
               onChanged: (value) {
-                placeName = value;
+                _placeName = value;
               },
               decoration: InputDecoration(
                 label: Text('Title'),
@@ -35,7 +43,13 @@ class AddPlace extends StatelessWidget {
               ),),
             ),
             SizedBox(height: 12,),
-            ImageInput(),
+            ImageInput(
+              onPickImage: (image){
+                _selectedImage = image;
+              },
+            ),
+            SizedBox(height: 12,),
+            LocationInput(),
             SizedBox(height: 12,),
             CupertinoButton.filled(
               sizeStyle: CupertinoButtonSize.medium,
@@ -43,7 +57,12 @@ class AddPlace extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [ Icon(CupertinoIcons.add), SizedBox(width: 4,) ,Text('Add Place') ],), 
               onPressed: () {
-                Navigator.pop(context, Place(placeName));
+
+                if(_placeName.isEmpty || _selectedImage == null){
+                  return;
+                }
+
+                Navigator.pop(context, Place(_placeName, _selectedImage!));
               })
           ],
         ),

@@ -55,6 +55,11 @@ class _PlacesListState extends State<PlacesList> {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [ 
+              CircleAvatar(
+                radius: 26, 
+                backgroundImage: FileImage(_places[index].image),
+
+                ),
               TextButton(child: Text(_places.elementAt(index).title.toString(),
               style: TextStyle(color: Colors.white, fontSize: 20),),
               onPressed: (){

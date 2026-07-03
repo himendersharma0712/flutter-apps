@@ -5,7 +5,9 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget{
 
-  const ImageInput({super.key});
+  const ImageInput({super.key, required this.onPickImage});
+
+  final void Function(File image) onPickImage;
 
   @override
   State<StatefulWidget> createState() {
@@ -31,6 +33,7 @@ class _ImageInputState extends State<ImageInput> {
     });
     // Image picker yields an XFile so we convert it to File
     
+    widget.onPickImage(_selectedImage!);
   }
 
 
