@@ -697,3 +697,38 @@ Flutter controls the animation.
 
 ## with keyword
 `In Dart, the with keyword is used to apply mixins to a class, allowing the class to inherit functionality from multiple mixin classes without traditional multiple inheritance.  This enables code reuse by adding capabilities (methods and fields) from other classes into the current class`
+
+Frontend sends an HTTP request to the Backend.
+Backend sends back an HTTP response.
+
+GET - fetch data
+POST - add new data
+PUT - used to overwrite data
+PATCH - used to update data
+DELETE - used to delete data
+
+HTTP Requests
+URL, Method, Headers, Body
+
+HTTP Response
+Headers, Body
+
+Use flutter http package to send http requests.
+
+CircularProgressIndicator() renders a loading loop widget.
+
+FutureBuilder Widget
+> A widget that builds itself based on the latest snapshot of interaction with a Future.
+
+> async functions produce a future automatically
+
+>Image picker package to pick or capture images
+
+>location package:  for getting a location
+>> https://pub.dev/packages/location
+
+# final, const 
+
+final >> variable holds a specific memory address, you can change the properties of the object stored in that address but CANNOT reassign it to a new memory location
+
+const >> you CANNOT modify or reassign a const variable
