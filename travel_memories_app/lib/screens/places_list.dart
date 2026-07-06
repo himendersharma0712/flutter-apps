@@ -1,6 +1,9 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_memories_app/helpers/db_helper.dart';
 import 'package:travel_memories_app/models/place.dart';
 import 'package:travel_memories_app/screens/add_place.dart';
 import 'package:travel_memories_app/screens/place_info.dart';
@@ -15,19 +18,48 @@ class PlacesList extends StatefulWidget{
 
 class _PlacesListState extends State<PlacesList> {
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadPlaces();
+  }
+
+  Future<void> _loadPlaces() async{
+    final dataList = await DbHelper.getData('user_places');
+
+    setState(() {
+      _places = dataList
+          .map(
+            (item) => Place(
+              title: item['title'] as String,
+              image: File(item['image'] as String), // Rebuild File object from the saved path string
+              id: item['id'] as String,             // Pass the database ID so it doesn't remake a new UUID
+            ),
+          )
+          .toList();
+    });
+  }
   
-  final List<Place> _places = [];
+  List<Place> _places = [];
 
   void _addPlace() async {
   
     final newPlace =  await Navigator.push<Place>(context, MaterialPageRoute(builder: (context) => AddPlace()));
-  
+
+
     if(newPlace != null){
       setState(() {
         _places.add(newPlace);
       });
   }
-          
+
+    DbHelper.insert('user_places', {
+      'id' : newPlace?.id,
+      'title': newPlace?.title,
+      'image': newPlace?.image.path
+    });
+
   }
 
   void openPlace(Place selectedPlace){
@@ -48,7 +80,7 @@ class _PlacesListState extends State<PlacesList> {
     if(_places.isNotEmpty){
         content = ListView.builder(
         itemCount: _places.length,
-        itemBuilder: (place,index){
+        itemBuilder: (context,index){
           final currentPlace = _places[index];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),

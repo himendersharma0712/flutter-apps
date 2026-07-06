@@ -62,7 +62,7 @@ class _AddPlaceState extends State<AddPlace> {
                   return;
                 }
 
-                Navigator.pop(context, Place(_placeName, _selectedImage!));
+                Navigator.pop(context, Place(title:_placeName, image:_selectedImage!));
               })
           ],
         ),
