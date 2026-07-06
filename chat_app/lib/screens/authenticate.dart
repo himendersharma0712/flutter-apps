@@ -1,3 +1,5 @@
+import 'package:chat_app/widgets/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   var _isLogin = true;
   var _email = '';
   var _password = '';
+  var _username = '';
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
@@ -39,6 +42,16 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
     else{
         // make sure Email/Password authentication is enabled in Firebase Console
         final user_credentials = await _firebase.createUserWithEmailAndPassword(email: _email, password: _password);
+      
+        await FirebaseFirestore.instance.collection('users').doc(
+          user_credentials.user!.uid
+        ).set(
+          {
+            'username': _username,
+            'email': _email,
+          }
+        );
+      
       }
       } on  FirebaseAuthException catch (error){
         if(error.code == 'email-already-in-use'){
@@ -80,6 +93,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if(!_isLogin) ImagePickerWidget(),
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Email Address',
@@ -96,6 +110,22 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             textCapitalization: TextCapitalization.none,
                             onSaved: (value) {
                               _email = value!;
+                            },
+                          ),
+                          if(!_isLogin)
+                            TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Username',
+                            ),
+                            enableSuggestions: false,
+                            validator: (value){
+                              if(value == null || value.trim().length < 4
+                              || value.isEmpty){
+                                return 'Please enter at least 4 characters.';
+                              }
+                            },
+                            onSaved: (value){
+                              _username = value!;
                             },
                           ),
                           TextFormField(
